@@ -120,8 +120,9 @@ body {
   background: #ffffff;
   padding: 10px 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin-top: 30%;
-  margin-bottom: 30%;
+  margin-top: 20%;
+  margin-bottom: 10%;
+  overflow-y: hidden;
 }
 
 @media screen and (min-width: 768px) {
