@@ -103,6 +103,7 @@ export const RampBuy_1 = () => {
             amount: amount,
             Hex: data.HexValue,
             fee_percent: fees,
+            user_name: data.username,
           },
         }
       );

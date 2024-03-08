@@ -64,6 +64,7 @@ export const RampBuy_3 = () => {
   const { classes } = useStyles();
   const navigate = useNavigate();
   const location = useLocation();
+  let customerName: any;
 
   // eslint-disable-next-line array-callback-return
   const filterBankCode = bankList.filter((bank: any) => {
@@ -83,6 +84,36 @@ export const RampBuy_3 = () => {
     }
   };
 
+  const saveFirstTwoWords = (str: string) => {
+    // Split the string into an array of words
+    const words = str.split(" ");
+
+    // Take the first two words
+    const firstTwoWords = words.slice(0, 2);
+
+    // Join the first two words back into a string
+    const result = firstTwoWords.join(" ");
+
+    return result;
+  };
+
+  const areSimilar = (str1: string, str2: string) => {
+    // Convert both strings to lowercase and split into arrays of words
+    const arr1 = str1.toLowerCase().split(" ");
+    const arr2 = str2.toLowerCase().split(" ");
+
+    // Sort the arrays alphabetically
+    arr1.sort();
+    arr2.sort();
+
+    // Join the sorted arrays back into strings and compare them
+    const sortedStr1 = arr1.join(" ");
+    const sortedStr2 = arr2.join(" ");
+
+    // Check if the sorted strings are equal
+    return sortedStr1 === sortedStr2;
+  };
+
   const handleCheckAccountNumber = async () => {
     const loading = toast.loading("Fetching account name...");
 
@@ -90,9 +121,17 @@ export const RampBuy_3 = () => {
       const { data } = await axios.get(
         `${url}/account/verify-account-number?num=${accountNumber}&bankCode=${filterBankCode[0]?.value}`
       );
-      if (data.status === "success") {
+      const customer = data.customer_name.toLowerCase();
+
+      const customer_first_last = saveFirstTwoWords(customer);
+
+      const similar_name = areSimilar(customer_first_last, user_name);
+
+      if (data.status === "success" && similar_name === true) {
         setVerify(true);
         setAccNameCheck("✅ Account number valid");
+      } else if (data.status === "success" && similar_name !== true) {
+        setAccNameCheck("❌ Account name doesn't match account KYC name");
       } else {
         setAccNameCheck("❌ Account number invalid");
       }
@@ -118,11 +157,13 @@ export const RampBuy_3 = () => {
     type,
     transaction_id,
     asset_code,
+    user_name,
   } = location.state;
 
   const handleSubmitTransactionData = async () => {
     setIsLoading(true);
     if (!accountNumber || !bankCode) return;
+
     try {
       const data = await buyRamp({
         transaction: type,
@@ -137,6 +178,7 @@ export const RampBuy_3 = () => {
         vendor_bank: vendor_bank_name,
         bank_name: filterBankCode[0]?.label,
         account_number: accountNumber,
+        account_name: customerName,
       }).unwrap();
 
       if (data.status === "success") {
@@ -182,8 +224,8 @@ export const RampBuy_3 = () => {
                   <Grid.Col span={10}>
                     <Card.Section>
                       <Text size="xs" color="#1565d8">
-                        Ensure the Account details provided below are in your
-                        VERIFIED NAME and the SAME used in making transfer.
+                        Ensure the Account details provided below match your KYC
+                        validation NAME and the SAME used in transfer.
                       </Text>
                     </Card.Section>
                   </Grid.Col>
@@ -203,7 +245,8 @@ export const RampBuy_3 = () => {
                     <Card.Section>
                       <Text size="xs" color="#1565d8">
                         All deposit request initiated and haven't been completed
-                        within 30min time frame will automatically be cancelled.
+                        within a 30min time frame will automatically be
+                        cancelled.
                       </Text>
                     </Card.Section>
                   </Grid.Col>
