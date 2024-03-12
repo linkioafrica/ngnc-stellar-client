@@ -105,10 +105,10 @@ export const RampSell_1 = () => {
       const { data } = await axios.get(
         `${url}/account/verify-account-number?num=${accountNumber}&bankCode=${filterBankCode[0]?.value}`
       );
+      console.log(data);
       if (data.status === "success") {
-        setAccountName(data.name);
+        setAccountName(data.customer_name);
         setAccNameCheck("");
-        toast.success("Account name found", { id: loading });
       } else {
         toast.error("Account name invalid", { id: loading });
       }
