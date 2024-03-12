@@ -124,7 +124,7 @@ export const RampSell_1 = () => {
   useEffect(() => {
     calculateFee(amount);
     setLimit(Number(amount));
-  }, [amount]);
+  });
 
   const calculateFee = (amount: string) => {
     const amountInNgn = Number(amount);
@@ -300,7 +300,7 @@ export const RampSell_1 = () => {
             disabled={
               accountName === "" ||
               accountNumber === "" ||
-              parseFloat(amount) < 20000
+              parseFloat(amount) < 10000
                 ? true
                 : false
             }

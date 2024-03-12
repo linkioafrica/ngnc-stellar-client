@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Button } from "@mantine/core";
+// import { Button } from "@mantine/core";
 
 export const RampBuyHold = () => {
   return (
@@ -24,7 +24,7 @@ export const RampBuyHold = () => {
           maintenance ongoing.
           <br /> Will be back Shortly. Thanks
         </p>
-        <Button
+        {/* <Button
           size="md"
           color="green"
           component="a"
@@ -41,7 +41,7 @@ export const RampBuyHold = () => {
           }}
         >
           Continue
-        </Button>
+        </Button> */}
       </div>
     </>
   );
