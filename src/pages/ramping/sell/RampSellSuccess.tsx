@@ -91,8 +91,8 @@ export const RampSellSuccess = () => {
             align="center"
             transform="capitalize"
           >
-            Once your asset has been received, <br /> a vendor will send NGN to
-            the bank account provided.
+            Once your asset has been received, <br /> NGN will be sent to the
+            bank account provided.
           </Text>
           <Space h={40} />
           <Button

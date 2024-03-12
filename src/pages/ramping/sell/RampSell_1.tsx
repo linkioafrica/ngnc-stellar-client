@@ -105,7 +105,6 @@ export const RampSell_1 = () => {
       const { data } = await axios.get(
         `${url}/account/verify-account-number?num=${accountNumber}&bankCode=${filterBankCode[0]?.value}`
       );
-      // console.log(data);
       if (data.status === "success") {
         setAccountName(data.customer_name);
         setAccNameCheck("");
@@ -117,6 +116,15 @@ export const RampSell_1 = () => {
       toast.error("Failed to get account name", { id: loading });
     }
   };
+
+  useEffect(() => {
+    checkIDNumber();
+  }, [accountNumber]);
+
+  useEffect(() => {
+    calculateFee(amount);
+    setLimit(Number(amount));
+  }, [amount]);
 
   const calculateFee = (amount: string) => {
     const amountInNgn = Number(amount);
@@ -132,20 +140,10 @@ export const RampSell_1 = () => {
     }
   };
 
-  useEffect(() => {
-    checkIDNumber();
-    setLimit(Number(amount));
-  }, [accountNumber, amount]);
-
-  useEffect(() => {
-    calculateFee(amount);
-  }, [amount]);
-
   const [sellRamp] = useSellRampMutation();
 
   const handleNext = async () => {
     setIsLoading(true);
-    console.log(amount);
     try {
       const { data } = await axios.get(
         `${url}/account/validate-wallet-address?address=${wallet_address}`
