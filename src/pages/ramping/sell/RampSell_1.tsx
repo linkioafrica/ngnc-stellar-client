@@ -138,7 +138,7 @@ export const RampSell_1 = () => {
 
   const calculateFee = () => {
     const amountInNgn = Number(amount);
-    if (amountInNgn >= 10000 && Number(amountInNgn) <= 5000000) {
+    if (amountInNgn >= 10000 && amountInNgn <= 5000000) {
       setFee(760);
       setAmountInNgn(amountInNgn - 760);
     }
@@ -160,7 +160,7 @@ export const RampSell_1 = () => {
             fee,
             Hex: data.HexValue,
             wallet_address,
-            amount: amountInNgn,
+            amount: amount,
             refCode: refCode,
             account_name: accountName,
             account_number: accountNumber,
