@@ -105,7 +105,7 @@ export const RampSell_1 = () => {
       const { data } = await axios.get(
         `${url}/account/verify-account-number?num=${accountNumber}&bankCode=${filterBankCode[0]?.value}`
       );
-      console.log(data);
+      // console.log(data);
       if (data.status === "success") {
         setAccountName(data.customer_name);
         setAccNameCheck("");
@@ -118,25 +118,7 @@ export const RampSell_1 = () => {
     }
   };
 
-  useEffect(() => {
-    checkIDNumber();
-    setLimit(Number(amount));
-  }, [accountNumber, amount]);
-
-  useEffect(() => {
-    calculateFee();
-    return () => {};
-  }, [accountNumber]);
-
-  const setLimit = (amount: number) => {
-    if (amount > 5000000) {
-      setAmount("5000000");
-    }
-  };
-
-  const [sellRamp] = useSellRampMutation();
-
-  const calculateFee = () => {
+  const calculateFee = (amount: string) => {
     const amountInNgn = Number(amount);
     if (amountInNgn >= 10000 && amountInNgn <= 5000000) {
       setFee(760);
@@ -144,8 +126,26 @@ export const RampSell_1 = () => {
     }
   };
 
+  const setLimit = (amount: number) => {
+    if (amount > 5000000) {
+      setAmount("5000000");
+    }
+  };
+
+  useEffect(() => {
+    checkIDNumber();
+    setLimit(Number(amount));
+  }, [accountNumber, amount]);
+
+  useEffect(() => {
+    calculateFee(amount);
+  }, [amount]);
+
+  const [sellRamp] = useSellRampMutation();
+
   const handleNext = async () => {
     setIsLoading(true);
+    console.log(amount);
     try {
       const { data } = await axios.get(
         `${url}/account/validate-wallet-address?address=${wallet_address}`
