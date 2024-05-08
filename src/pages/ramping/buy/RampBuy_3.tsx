@@ -127,16 +127,15 @@ export const RampBuy_3 = () => {
 
       const similar_name = areSimilar(customer_first_last, user_name);
 
-      if (data.status === "success" && similar_name === true) {
+      if (data.status === "success") {
         setVerify(true);
         setAccNameCheck("✅ Account number valid");
-      } else if (data.status === "success" && similar_name !== true) {
-        setAccNameCheck("❌ Account name doesn't match account KYC name");
+        // } else if (data.status === "success" && similar_name !== true) {
+        //   setAccNameCheck("❌ Account name doesn't match account KYC name");
       } else {
         setAccNameCheck("❌ Account number invalid");
       }
     } catch (error) {
-      // console.log(error);
       toast.error("Failed to get account name", { id: loading });
     }
   };
