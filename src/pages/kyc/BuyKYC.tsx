@@ -43,25 +43,24 @@ export const BuyKYC = () => {
     setIsLoading(true);
     setIdCheck("");
 
-    let data: any;
     try {
-      data = await axios.get(
+      const { data } = await axios.get(
         `${url}/stellar/customer-kyc?idType=${IDType}&idNumber=${idNumber}&email=${email}&address=${wallet_address}`
       );
-      console.log(data.data);
-      if (data.data.status === "success") {
+      console.log(data.status);
+      if (data.status === "success") {
         navigate("/stellar_deposit_2", {
           state: {
             ...location.state,
           },
         });
       } else {
-        setIdCheck("❌This ID details already exist. Please check again");
+        setIdCheck(data.message);
+        setIsLoading(false);
       }
     } catch (error) {
       console.log(error);
     } finally {
-      setIsLoading(false);
     }
   };
 
