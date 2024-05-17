@@ -60,7 +60,6 @@ export const BuyKYC = () => {
       }
     } catch (error) {
       console.log(error);
-    } finally {
     }
   };
 

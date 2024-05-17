@@ -33,6 +33,7 @@ export const SellKYC = () => {
 
   const [sellRamp] = useSellRampMutation();
 
+  const [idCheck, setIdCheck] = useState("");
   const [IDType, setIDType] = useState();
   const [idNumber, setIDNumber] = useState();
   // const [dateOfBirth, setDateOfBirth] = useState();
@@ -44,12 +45,14 @@ export const SellKYC = () => {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     setIsLoading(true);
+    setIdCheck("");
+
     try {
       const { data } = await axios.get(
         `${url}/stellar/customer-kyc?idType=${IDType}&idNumber=${idNumber}&email=${email}&address=${wallet_address}`
       );
+      console.log(data.status);
       if (data.status === "success") {
-        toast.success(data.message);
         await sellRamp({
           transaction: location.state.type,
           transaction_id: location.state.transaction_id,
@@ -68,12 +71,11 @@ export const SellKYC = () => {
           },
         });
       } else {
-        toast.error(data.data);
+        setIdCheck(data.message);
+        setIsLoading(false);
       }
     } catch (error) {
       console.log(error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -136,13 +138,17 @@ export const SellKYC = () => {
               value={email}
               onChange={(event: any) => setEmail(event.target.value)}
             />
-            {/* <Space h={30} />
-            <DatePicker
-              placeholder="Pick date"
-              label="Date of birth"
-              value={dateOfBirth}
-              onChange={(value: any) => setDateOfBirth(value)}
-            /> */}
+            <p
+              className="text-gray-600"
+              style={{
+                color: "red",
+                marginTop: "5px",
+                fontWeight: "lighter",
+                fontSize: "14px",
+              }}
+            >
+              {idCheck}
+            </p>
 
             <Space h={35} />
             <Button
