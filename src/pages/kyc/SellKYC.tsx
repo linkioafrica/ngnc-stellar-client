@@ -46,7 +46,7 @@ export const SellKYC = () => {
     setIsLoading(true);
     try {
       const { data } = await axios.get(
-        `${url}/transaction/customer-kyc?idType=${IDType}&idNumber=${idNumber}&email=${email}&address=${wallet_address}`
+        `${url}/stellar/customer-kyc?idType=${IDType}&idNumber=${idNumber}&email=${email}&address=${wallet_address}`
       );
       if (data.status === "success") {
         toast.success(data.message);
