@@ -11,7 +11,7 @@ import {
 import { IconArrowNarrowLeft } from "@tabler/icons";
 import axios from "axios";
 import { url } from "../../api/";
-import toast from "react-hot-toast";
+// import toast from "react-hot-toast";
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { SlideInOutAnimation } from "../../libs/PageAnimation";
