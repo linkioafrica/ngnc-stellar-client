@@ -102,14 +102,7 @@ export const SellKYC = () => {
             <Select
               label="ID type"
               value={IDType}
-              data={[
-                "BVN",
-                "Passport",
-                "NIN",
-                "Driving License",
-                "Voters Card ",
-                "National ID",
-              ]}
+              data={["BVN", "NIN", "Voters Card ", "Driving License"]}
               searchable
               size="md"
               transition="pop-top-left"
