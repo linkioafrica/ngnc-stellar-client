@@ -65,8 +65,10 @@ export const RampBuy_1 = () => {
   const numCalc = (numb: any) => {
     if (numb < 20000) {
       return 0;
-    } else if (numb >= 20000 && numb < 2000000) {
-      return numb * (fees / 100);
+    } else if (numb >= 20000 && numb < 100000) {
+      return numb * (1.5 / 100);
+    } else if (numb >= 100000 && numb < 2000000) {
+      return numb * (0.8 / 100) + 1050;
     } else return 0;
   };
 
