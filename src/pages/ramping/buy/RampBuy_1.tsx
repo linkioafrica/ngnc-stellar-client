@@ -104,7 +104,7 @@ export const RampBuy_1 = () => {
             network: "stellar",
             amount: amount,
             Hex: data.HexValue,
-            fee_percent: fees,
+            fee_percent: charge,
             user_name: data.username,
           },
         }

@@ -91,8 +91,8 @@ export const RampBuy_2 = () => {
                   <Grid.Col span={10}>
                     <Card.Section>
                       <Text size="xs" color="#1565d8">
-                        To ensure your transfer is processed, add the REFERENCE
-                        CODE and don’t add any CRYPTO PHRASE.
+                        To ensure transfer is processed, add the REFERENCE CODE
+                        & don’t add any CRYPTO PHRASE.
                       </Text>
                     </Card.Section>
                   </Grid.Col>
@@ -132,7 +132,7 @@ export const RampBuy_2 = () => {
                       NGN {amount}
                     </Text>
                     <Text size="xs" align="center" color="#696F79">
-                      (Merchant fee of {feePercent}% included)
+                      (Merchant fee of {feePercent} included)
                     </Text>
                   </Grid.Col>
                 </Grid>
