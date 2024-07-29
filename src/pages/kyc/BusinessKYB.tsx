@@ -25,7 +25,7 @@ export const BusinessKyb = () => {
           size="md"
           color="green"
           component="a"
-          href="https://business.linkio.africa"
+          href="https://www.linkio.world/ngnc"
           target="_blank"
           rel="noreferrer"
           style={{
