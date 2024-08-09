@@ -187,7 +187,7 @@ export const RampSell_1 = () => {
             type: transaction,
             fee,
             Hex: data.HexValue,
-            amount: amountInNgn,
+            amount: amount,
             refCode: refCode,
             account_name: accountName,
             account_number: accountNumber,
