@@ -105,7 +105,7 @@ export const RampBuySuccess = () => {
             loading={isLoading && true}
             onClick={validateRequest}
           >
-            Done
+            Complete Deposit
           </Button>
         </section>
       </FadeInOutAnimation>

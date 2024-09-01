@@ -106,7 +106,7 @@ export const RampSellSuccess = () => {
             loading={isLoading && true}
             onClick={validateRequest}
           >
-            Done
+            Complete Withdrawal
           </Button>
         </section>
       </FadeInOutAnimation>
