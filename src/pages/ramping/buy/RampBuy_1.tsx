@@ -13,7 +13,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { SlideInOutAnimation } from "../../../libs/PageAnimation";
 import axios from "axios";
-import { stellarFees, url } from "../../../api";
+import { url } from "../../../api";
 // import { ImSpinner2 } from "react-icons/im";
 
 const useStyles = createStyles((theme) => ({
@@ -29,7 +29,7 @@ export const RampBuy_1 = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [amount, setAmount] = useState("");
   const [charge, setCharge] = useState(0);
-  const [fees, setFees] = useState(0);
+  // const [fees, setFees] = useState(0);
 
   let wallet_address: any = "";
 
@@ -72,18 +72,18 @@ export const RampBuy_1 = () => {
     } else return 0;
   };
 
-  const handleGetStellarFees = async () => {
-    try {
-      const { data } = await axios.get(`${stellarFees}`);
-      setFees(data.fees);
-    } catch (error) {
-      return;
-    }
-  };
+  // const handleGetStellarFees = async () => {
+  //   try {
+  //     const { data } = await axios.get(`${stellarFees}`);
+  //     setFees(data.fees);
+  //   } catch (error) {
+  //     return;
+  //   }
+  // };
 
-  useEffect(() => {
-    handleGetStellarFees();
-  }, []);
+  // useEffect(() => {
+  //   handleGetStellarFees();
+  // }, []);
 
   const handleNextSlide = async () => {
     setIsLoading(true);

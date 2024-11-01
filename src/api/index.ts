@@ -6,8 +6,6 @@ export const url = "https://stingray-stellar-2ay7e.ondigitalocean.app/api";
 // export const url2 = "http://localhost:8000/sep24";
 export const url2 = "https://anchor.ngnc.online/sep24";
 
-export const stellarFees = "https://api.ngnc.online/live/v1/stellar-fees";
-
 export const baseQuery = fetchBaseQuery({
   baseUrl: url,
   credentials: "include",
