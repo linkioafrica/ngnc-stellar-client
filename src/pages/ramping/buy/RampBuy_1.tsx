@@ -63,9 +63,9 @@ export const RampBuy_1 = () => {
 
   // calculating fee
   const numCalc = (numb: any) => {
-    if (numb < 20000) {
+    if (numb < 5000) {
       return 0;
-    } else if (numb >= 20000 && numb < 100000) {
+    } else if (numb >= 5000 && numb < 100000) {
       return numb * (1.5 / 100);
     } else if (numb >= 100000 && numb < 2000000) {
       return numb * (0.8 / 100) + 1050;
@@ -150,7 +150,7 @@ export const RampBuy_1 = () => {
             size="md"
             value={amount}
             type="number"
-            placeholder={`min: 20,000`}
+            placeholder={`min: 5,000`}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               setAmount(event.target.value);
             }}
@@ -178,7 +178,7 @@ export const RampBuy_1 = () => {
             disabled={
               wallet_address === "" ||
               amount === "" ||
-              parseFloat(amount) < 20000
+              parseFloat(amount) < 5000
                 ? true
                 : false
             }
