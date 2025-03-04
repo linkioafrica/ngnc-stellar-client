@@ -22,6 +22,7 @@ import {
 import { useNavigate, useLocation } from "react-router-dom";
 import { SlideInOutAnimation } from "../../../libs/PageAnimation";
 import { linkBankList } from "../../../libs/linkBankList";
+import { useBuyRampMutation } from "../../../services/transactionApi";
 import { useEffect, useState } from "react";
 const useStyles = createStyles((theme) => ({
   button: {
@@ -34,28 +35,73 @@ const useStyles = createStyles((theme) => ({
 
 export const RampBuy_2 = () => {
   // const [fee, setFee] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
   const { classes } = useStyles();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [account_name, setAccountName] = useState("");
-  const [account_number, setAccountNumber] = useState("");
-  const [bank_name, setBankName] = useState("");
+  const [vendor_account_name, setVendorAccountName] = useState("");
+  const [vendor_account_number, setVendorAccountNumber] = useState("");
+  const [vendor_bank_name, setVendorBankName] = useState("");
   let [refCode] = useState("");
 
   useEffect(() => {
     const randomIndex = Math.floor(Math.random() * linkBankList.length);
     const randomBankDetail = linkBankList[randomIndex];
 
-    setAccountName(randomBankDetail.accountName);
-    setAccountNumber(randomBankDetail.accountNumber);
-    setBankName(randomBankDetail.bankName);
+    setVendorAccountName(randomBankDetail.accountName);
+    setVendorAccountNumber(randomBankDetail.accountNumber);
+    setVendorBankName(randomBankDetail.bankName);
   }, []);
 
-  const amount = location.state.amount;
-  const fee = location.state.fee;
-  const feePercent = location.state.fee_percent;
   refCode = Math.floor(Math.random() * 99999999999).toString();
+
+  const [buyRamp] = useBuyRampMutation();
+  const {
+    type,
+    asset_code,
+    transaction_id,
+    amount,
+    fee,
+    feePercent,
+    wallet_address,
+    customerName,
+    accountNumber,
+    bankName,
+  } = location.state;
+
+  const handleSubmitTransactionData = async () => {
+    setIsLoading(true);
+
+    try {
+      const data = await buyRamp({
+        transaction: type,
+        transaction_id,
+        reference: refCode,
+        asset_code,
+        amount,
+        fee,
+        wallet_address,
+        vendor_name: vendor_account_name,
+        vendor_accNumber: vendor_account_number,
+        vendor_bank: vendor_bank_name,
+        bank_name: bankName,
+        account_number: customerName,
+        account_name: accountNumber,
+      }).unwrap();
+
+      if (data.status === "success") {
+        navigate("/stellar_deposit_success", {
+          state: {
+            ...location.state,
+          },
+        });
+      }
+    } catch (error: any) {
+      console.log(error);
+      navigate("/bad-request");
+    }
+  };
 
   return (
     <>
@@ -82,17 +128,18 @@ export const RampBuy_2 = () => {
                 p="sm"
                 radius={8}
                 mt={10}
+                pb={5}
                 style={{ backgroundColor: "#F4F8FF" }}
               >
                 <Grid justify="space-between" align="flex-start">
                   <Grid.Col span={1}>
-                    <IconInfoCircle size={25} stroke={1.5} color="#1565d8" />
+                    <IconInfoCircle size={30} stroke={1.5} color="#1565d8" />
                   </Grid.Col>
                   <Grid.Col span={10}>
                     <Card.Section>
                       <Text size="xs" color="#1565d8">
-                        To ensure transfer is processed, add the REFERENCE CODE
-                        & don’t add any CRYPTO PHRASE.
+                        Add the REFERENCE CODE for processed transfer. <br />
+                        Avoid adding CRYPTO PHRASES.
                       </Text>
                     </Card.Section>
                   </Grid.Col>
@@ -132,7 +179,8 @@ export const RampBuy_2 = () => {
                       NGN {amount}
                     </Text>
                     <Text size="xs" align="center" color="#696F79">
-                      (Merchant fee of {feePercent} included)
+                      (Merchant fee included)
+                      {/* (Merchant fee of {fee} included) */}
                     </Text>
                   </Grid.Col>
                 </Grid>
@@ -198,8 +246,8 @@ export const RampBuy_2 = () => {
                 Account name
               </Text>
               <Group>
-                <Text size="md" weight="semi-bold" align="center" color="#000">
-                  {account_name.slice(0, 20)}
+                <Text size="sm" weight="semi-bold" align="center" color="#000">
+                  {vendor_account_name.slice(0, 20)}
                 </Text>
                 {/* <CopyButton value={account_name} timeout={1000}>
                   {({ copied, copy }) => (
@@ -230,10 +278,10 @@ export const RampBuy_2 = () => {
                 Bank name
               </Text>
               <Group>
-                <Text size="md" weight="semi-bold" align="center" color="#000">
-                  {bank_name}
+                <Text size="sm" weight="semi-bold" align="center" color="#000">
+                  {vendor_bank_name}
                 </Text>
-                <CopyButton value={bank_name} timeout={1000}>
+                <CopyButton value={vendor_bank_name} timeout={1000}>
                   {({ copied, copy }) => (
                     <Tooltip
                       label={copied ? "Copied" : "Copy"}
@@ -262,10 +310,10 @@ export const RampBuy_2 = () => {
                 Account number
               </Text>
               <Group>
-                <Text size="md" weight="semi-bold" align="center" color="#000">
-                  {account_number}
+                <Text size="sm" weight="semi-bold" align="center" color="#000">
+                  {vendor_account_number}
                 </Text>
-                <CopyButton value={account_number} timeout={1000}>
+                <CopyButton value={vendor_account_number} timeout={1000}>
                   {({ copied, copy }) => (
                     <Tooltip
                       label={copied ? "Copied" : "Copy"}
@@ -294,7 +342,7 @@ export const RampBuy_2 = () => {
                 Reference code
               </Text>
               <Group>
-                <Text size="md" weight="semi-bold" align="center" color="#000">
+                <Text size="sm" weight="semi-bold" align="center" color="#000">
                   {refCode}
                 </Text>
                 <CopyButton value={refCode} timeout={5000}>
@@ -333,20 +381,22 @@ export const RampBuy_2 = () => {
             style={{ fontWeight: 500 }}
             radius="md"
             className={classes.button}
-            onClick={() =>
-              navigate("/stellar_deposit_3", {
-                state: {
-                  fee,
-                  vendor_account_name: account_name,
-                  vendor_account_number: account_number,
-                  vendor_bank_name: bank_name,
-                  refCode: refCode,
-                  ...location.state,
-                },
-              })
-            }
+            loading={isLoading && true}
+            onClick={handleSubmitTransactionData}
+            // onClick={() =>
+            //   navigate("/stellar_deposit_3", {
+            //     state: {
+            //       fee,
+            //       vendor_account_name: account_name,
+            //       vendor_account_number: account_number,
+            //       vendor_bank_name: bank_name,
+            //       refCode: refCode,
+            //       ...location.state,
+            //     },
+            //   })
+            // }
           >
-            I have paid, Continue
+            I've Paid. Continue
           </Button>
         </section>
       </SlideInOutAnimation>

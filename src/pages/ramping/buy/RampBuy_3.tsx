@@ -24,7 +24,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { SlideInOutAnimation } from "../../../libs/PageAnimation";
 import { bankList } from "../../../libs/bankList";
 import { IconArrowNarrowLeft, IconInfoCircle } from "@tabler/icons";
-import { useBuyRampMutation } from "../../../services/transactionApi";
+// import { useBuyRampMutation } from "../../../services/transactionApi";
 import toast from "react-hot-toast";
 
 const useStyles = createStyles((theme) => ({
@@ -114,6 +114,8 @@ export const RampBuy_3 = () => {
     return sortedStr1 === sortedStr2;
   };
 
+  const { user_name } = location.state;
+
   const handleCheckAccountNumber = async () => {
     const loading = toast.loading("Fetching account name...");
 
@@ -122,6 +124,7 @@ export const RampBuy_3 = () => {
         `${url}/account/verify-account-number?num=${accountNumber}&bankCode=${filterBankCode[0]?.value}`
       );
       const customer = data.customer_name.toLowerCase();
+      customerName = data.customer_name;
 
       const customer_first_last = saveFirstTwoWords(customer);
 
@@ -144,57 +147,6 @@ export const RampBuy_3 = () => {
     checkIDNumber();
   }, [accountNumber]);
 
-  const [buyRamp] = useBuyRampMutation();
-  const {
-    amount,
-    fee,
-    wallet_address,
-    refCode,
-    vendor_account_name,
-    vendor_account_number,
-    vendor_bank_name,
-    type,
-    transaction_id,
-    asset_code,
-    user_name,
-  } = location.state;
-
-  const handleSubmitTransactionData = async () => {
-    setIsLoading(true);
-    if (!accountNumber || !bankCode) return;
-
-    try {
-      const data = await buyRamp({
-        transaction: type,
-        transaction_id,
-        reference: refCode,
-        asset_code,
-        amount,
-        fee,
-        wallet_address,
-        vendor_name: vendor_account_name,
-        vendor_accNumber: vendor_account_number,
-        vendor_bank: vendor_bank_name,
-        bank_name: filterBankCode[0]?.label,
-        account_number: accountNumber,
-        account_name: customerName,
-      }).unwrap();
-
-      if (data.status === "success") {
-        navigate("/stellar_deposit_success", {
-          state: {
-            ...location.state,
-            bank_name: filterBankCode[0]?.label,
-            account_number: accountNumber,
-          },
-        });
-      }
-    } catch (error: any) {
-      console.log(error);
-      navigate("/bad-request");
-    }
-  };
-
   return (
     <>
       <SlideInOutAnimation>
@@ -205,52 +157,51 @@ export const RampBuy_3 = () => {
             cursor="pointer"
             onClick={() => navigate(-1)}
           />
-          <Text size="xl" weight="semi-bold" align="center" color="#000" mt={5}>
-            Proof of Payment
+          <Text size="xl" weight="semi-bold" align="center" color="#000" mt={7}>
+            Paying Account
           </Text>
           <section>
             <div>
               <Card
                 p="sm"
                 radius={8}
-                mt={20}
+                mt={10}
+                pb={5}
                 style={{ backgroundColor: "#F4F8FF" }}
               >
                 <Grid justify="space-between" align="flex-start">
                   <Grid.Col span={1}>
                     <IconInfoCircle size={30} stroke={1.5} color="#1565d8" />
                   </Grid.Col>
-                  <Grid.Col span={10}>
+                  <Grid.Col span={11}>
                     <Card.Section>
                       <Text size="xs" color="#1565d8">
                         Ensure the Account details provided below match your KYC
-                        validation NAME and the SAME used in transfer.
+                        validation NAME. <br /> Deposit request not completed
+                        within a 30min will automatically be cancelled.
                       </Text>
                     </Card.Section>
                   </Grid.Col>
                 </Grid>
               </Card>
-              <Card
+              {/* <Card
                 p="sm"
                 radius={8}
                 mt={15}
+                pb={5}
                 style={{ backgroundColor: "#F4F8FF" }}
               >
                 <Grid justify="space-between" align="flex-start">
                   <Grid.Col span={1}>
-                    <IconInfoCircle size={30} stroke={1.5} color="#1565d8" />
+                    <IconInfoCircle size={20} stroke={1.5} color="#1565d8" />
                   </Grid.Col>
-                  <Grid.Col span={10}>
+                  <Grid.Col span={11}>
                     <Card.Section>
-                      <Text size="xs" color="#1565d8">
-                        All deposit request initiated and haven't been completed
-                        within a 30min time frame will automatically be
-                        cancelled.
-                      </Text>
+                      <Text size="xs" color="#1565d8"></Text>
                     </Card.Section>
                   </Grid.Col>
                 </Grid>
-              </Card>
+              </Card> */}
             </div>
             <Space h={20} />
             <Select
@@ -306,9 +257,18 @@ export const RampBuy_3 = () => {
             style={{ fontWeight: 500 }}
             radius="md"
             className={classes.button}
-            onClick={handleSubmitTransactionData}
             loading={isLoading && true}
             disabled={accountNumber === "" || verify === false ? true : false}
+            onClick={() =>
+              navigate("/stellar_deposit_3", {
+                state: {
+                  ...location.state,
+                  customerName: customerName,
+                  accountNumber: accountNumber,
+                  bankName: filterBankCode[0]?.label,
+                },
+              })
+            }
           >
             Continue
           </Button>

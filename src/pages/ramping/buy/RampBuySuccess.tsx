@@ -19,13 +19,13 @@ export const RampBuySuccess = () => {
   const location = useLocation();
 
   const {
-    transaction_id,
-    asset_code,
-    token,
     type,
+    asset_code,
+    transaction_id,
+    amount,
+    token,
     fee,
     Hex,
-    amount,
     refCode,
     bank_name,
     account_number,
@@ -76,12 +76,12 @@ export const RampBuySuccess = () => {
           </div>
           <Space h={40} />
           <Text
-            style={{ fontSize: "1.2rem" }}
+            style={{ fontSize: "1.5rem" }}
             weight={700}
             align="center"
             transform="capitalize"
           >
-            Buy Request Received
+            Request Received
           </Text>
           <Space h={10} />
           <Text
@@ -90,8 +90,7 @@ export const RampBuySuccess = () => {
             align="center"
             transform="capitalize"
           >
-            Once your NGN has been received by the vendor,
-            <br /> your wallet will be funded.
+            Your wallet will be funded Soon.
           </Text>
           <Space h={40} />
           <Button
@@ -105,7 +104,7 @@ export const RampBuySuccess = () => {
             loading={isLoading && true}
             onClick={validateRequest}
           >
-            Complete Deposit
+            Initiate Deposit
           </Button>
         </section>
       </FadeInOutAnimation>

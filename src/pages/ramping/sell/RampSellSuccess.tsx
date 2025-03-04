@@ -71,18 +71,17 @@ export const RampSellSuccess = () => {
     <>
       <FadeInOutAnimation>
         <section>
-          <Space h={20} />
           <div style={{ width: 300, margin: "0 auto" }}>
             <SuccessImage />
           </div>
           <Space h={40} />
           <Text
-            style={{ fontSize: "1.8rem" }}
+            style={{ fontSize: "1.5rem" }}
             weight={700}
             align="center"
             transform="capitalize"
           >
-            Sell Request Received
+            Request Received
           </Text>
           <Space h={10} />
           <Text
@@ -91,8 +90,7 @@ export const RampSellSuccess = () => {
             align="center"
             transform="capitalize"
           >
-            Once your asset has been received, <br /> NGN will be sent to the
-            bank account provided.
+            NGN will be sent to the bank account provided.
           </Text>
           <Space h={40} />
           <Button
@@ -106,7 +104,7 @@ export const RampSellSuccess = () => {
             loading={isLoading && true}
             onClick={validateRequest}
           >
-            Complete Withdrawal
+            Initiate Withdrawal
           </Button>
         </section>
       </FadeInOutAnimation>

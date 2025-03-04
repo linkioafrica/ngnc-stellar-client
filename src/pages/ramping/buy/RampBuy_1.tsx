@@ -67,7 +67,7 @@ export const RampBuy_1 = () => {
       return 0;
     } else if (numb >= 5000 && numb < 100000) {
       return numb * (1.5 / 100);
-    } else if (numb >= 100000 && numb < 2000000) {
+    } else if (numb >= 100000 && numb <= 2000000) {
       return numb * (0.8 / 100) + 1050;
     } else return 0;
   };
@@ -98,11 +98,11 @@ export const RampBuy_1 = () => {
             type: transaction,
             asset_code: asset_code,
             transaction_id: transaction_id,
+            amount: amount,
             token: token,
             wallet_address: wallet_address,
             fee: charge,
             network: "stellar",
-            amount: amount,
             Hex: data.HexValue,
             fee_percent: charge,
             user_name: data.username,

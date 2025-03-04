@@ -30,8 +30,8 @@ export const PageRoutes = () => {
 
         {/* Buy Ramp */}
         <Route path="/stellar_deposit_1" element={<RampBuy_1 />} />
-        <Route path="/stellar_deposit_2" element={<RampBuy_2 />} />
-        <Route path="/stellar_deposit_3" element={<RampBuy_3 />} />
+        <Route path="/stellar_deposit_2" element={<RampBuy_3 />} />
+        <Route path="/stellar_deposit_3" element={<RampBuy_2 />} />
 
         {/* Sell Ramp */}
         <Route path="/stellar_withdraw_1" element={<RampSell_1 />} />
