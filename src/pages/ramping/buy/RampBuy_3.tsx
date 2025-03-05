@@ -173,12 +173,12 @@ export const RampBuy_3 = () => {
                   <Grid.Col span={1}>
                     <IconInfoCircle size={30} stroke={1.5} color="#1565d8" />
                   </Grid.Col>
-                  <Grid.Col span={11}>
+                  <Grid.Col span={10}>
                     <Card.Section>
                       <Text size="xs" color="#1565d8">
                         Ensure the Account details provided below match your KYC
-                        validation NAME. <br /> Deposit request not completed
-                        within a 30min will automatically be cancelled.
+                        NAME. <br /> Deposit not completed within 30min be
+                        automatically cancelled.
                       </Text>
                     </Card.Section>
                   </Grid.Col>
@@ -263,9 +263,9 @@ export const RampBuy_3 = () => {
               navigate("/stellar_deposit_3", {
                 state: {
                   ...location.state,
-                  customerName: customerName,
-                  accountNumber: accountNumber,
-                  bankName: filterBankCode[0]?.label,
+                  account_name: customerName,
+                  account_number: accountNumber,
+                  bank_name: filterBankCode[0]?.label,
                 },
               })
             }

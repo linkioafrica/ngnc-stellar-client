@@ -136,8 +136,8 @@ export const RampBuy_1 = () => {
                 <Grid.Col span={10}>
                   <Card.Section>
                     <Text size="xs" color="#1565d8">
-                      Before you confirm make sure the AMOUNT and WALLET ADDRESS
-                      are correct. Any errors will result in loss of funds!
+                      Confirm AMOUNT and WALLET ADDRESS are correct. Any errors
+                      will result in loss of funds!
                     </Text>
                   </Card.Section>
                 </Grid.Col>

@@ -63,11 +63,11 @@ export const RampBuy_2 = () => {
     transaction_id,
     amount,
     fee,
-    feePercent,
+    // feePercent,
     wallet_address,
-    customerName,
-    accountNumber,
-    bankName,
+    account_name,
+    account_number,
+    bank_name,
   } = location.state;
 
   const handleSubmitTransactionData = async () => {
@@ -85,9 +85,9 @@ export const RampBuy_2 = () => {
         vendor_name: vendor_account_name,
         vendor_accNumber: vendor_account_number,
         vendor_bank: vendor_bank_name,
-        bank_name: bankName,
-        account_number: customerName,
-        account_name: accountNumber,
+        bank_name: bank_name,
+        account_number: account_name,
+        account_name: account_number,
       }).unwrap();
 
       if (data.status === "success") {
@@ -138,7 +138,7 @@ export const RampBuy_2 = () => {
                   <Grid.Col span={10}>
                     <Card.Section>
                       <Text size="xs" color="#1565d8">
-                        Add the REFERENCE CODE for processed transfer. <br />
+                        Add REFERENCE CODE for transfer. <br />
                         Avoid adding CRYPTO PHRASES.
                       </Text>
                     </Card.Section>
