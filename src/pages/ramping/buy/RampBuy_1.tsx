@@ -14,6 +14,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { SlideInOutAnimation } from "../../../libs/PageAnimation";
 import axios from "axios";
 import { url } from "../../../api";
+import { bannedWallets } from "../../../constants";
 // import { ImSpinner2 } from "react-icons/im";
 
 const useStyles = createStyles((theme) => ({
@@ -30,6 +31,7 @@ export const RampBuy_1 = () => {
   const [amount, setAmount] = useState("");
   const [charge, setCharge] = useState(0);
   // const [fees, setFees] = useState(0);
+  const [walletCheck, setWalletCheck] = useState("");
 
   let wallet_address: any = "";
 
@@ -72,45 +74,44 @@ export const RampBuy_1 = () => {
     } else return 0;
   };
 
-  // const handleGetStellarFees = async () => {
-  //   try {
-  //     const { data } = await axios.get(`${stellarFees}`);
-  //     setFees(data.fees);
-  //   } catch (error) {
-  //     return;
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   handleGetStellarFees();
-  // }, []);
-
   const handleNextSlide = async () => {
     setIsLoading(true);
-    try {
-      const { data } = await axios.get(
-        `${url}/account/validate-wallet-address?address=${wallet_address}`
+
+    const result = bannedWallets.some((bannedWallet) => {
+      return wallet_address === bannedWallet;
+    });
+
+    if (result) {
+      setWalletCheck(
+        "Wallet address has been banned from transacting. Contact support for help."
       );
-      navigate(
-        data.validWallet === null ? "/deposit_kyc" : "/stellar_deposit_2",
-        {
-          state: {
-            type: transaction,
-            asset_code: asset_code,
-            transaction_id: transaction_id,
-            amount: amount,
-            token: token,
-            wallet_address: wallet_address,
-            fee: charge,
-            network: "stellar",
-            Hex: data.HexValue,
-            fee_percent: charge,
-            user_name: data.username,
-          },
-        }
-      );
-    } catch (error) {
-      // toast.error(error.message);
+      setIsLoading(false);
+    } else {
+      try {
+        const { data } = await axios.get(
+          `${url}/account/validate-wallet-address?address=${wallet_address}`
+        );
+        navigate(
+          data.validWallet === null ? "/deposit_kyc" : "/stellar_deposit_2",
+          {
+            state: {
+              type: transaction,
+              asset_code: asset_code,
+              transaction_id: transaction_id,
+              amount: amount,
+              token: token,
+              wallet_address: wallet_address,
+              fee: charge,
+              network: "stellar",
+              Hex: data.HexValue,
+              fee_percent: charge,
+              user_name: data.username,
+            },
+          }
+        );
+      } catch (error) {
+        // toast.error(error.message);
+      }
     }
   };
 
@@ -165,6 +166,18 @@ export const RampBuy_1 = () => {
             type="string"
             value={wallet_address}
           />
+
+          <p
+            className="text-gray-600"
+            style={{
+              color: "red",
+              marginTop: "5px",
+              fontWeight: "lighter",
+              fontSize: "14px",
+            }}
+          >
+            {walletCheck}
+          </p>
 
           <Space h={30} />
           <Button

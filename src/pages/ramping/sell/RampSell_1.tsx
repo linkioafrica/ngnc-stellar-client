@@ -23,6 +23,7 @@ import { cleanup } from "../../../features/rampingSlice";
 import { bankList } from "../../../libs/bankList";
 import { SlideInOutAnimation } from "../../../libs/PageAnimation";
 import { useSellRampMutation } from "../../../services/transactionApi";
+import { bannedWallets } from "../../../constants";
 import axios from "axios";
 import toast from "react-hot-toast";
 
@@ -63,6 +64,7 @@ export const RampSell_1 = () => {
   const [amountInNgn, setAmountInNgn] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [accNameCheck, setAccNameCheck] = useState("");
+  const [walletCheck, setWalletCheck] = useState("");
 
   const { classes } = useStyles();
   const navigate = useNavigate();
@@ -144,62 +146,74 @@ export const RampSell_1 = () => {
 
   const handleNext = async () => {
     setIsLoading(true);
-    try {
-      const { data } = await axios.get(
-        `${url}/account/validate-wallet-address?address=${wallet_address}`
+
+    const result = bannedWallets.some((bannedWallet) => {
+      return wallet_address === bannedWallet;
+    });
+
+    if (result) {
+      setWalletCheck(
+        "Wallet address has been banned from transacting. Contact support for help."
       );
-      if (data.validWallet === null) {
-        navigate("/withdraw_kyc", {
-          state: {
-            transaction_id,
-            asset_code,
-            token,
-            type: transaction,
-            fee,
-            Hex: data.HexValue,
-            wallet_address,
-            amount: amount,
-            refCode: refCode,
-            account_name: accountName,
-            account_number: accountNumber,
-            bank_name: filterBankCode[0]?.label,
-          },
-        });
-      } else {
-        await sellRamp({
-          transaction,
-          transaction_id,
-          asset_code,
-          reference: refCode,
-          amount: amountInNgn,
-          fee,
-          wallet_address,
-          account_name: accountName,
-          account_number: accountNumber,
-          bank_name: filterBankCode[0]?.label,
-          type: "sell_ramp",
-        }).unwrap();
-        navigate("/stellar_withdraw_success", {
-          state: {
-            transaction_id,
-            asset_code,
-            token,
-            type: transaction,
-            fee,
-            Hex: data.HexValue,
-            amount: amount,
-            refCode: refCode,
-            account_name: accountName,
-            account_number: accountNumber,
-            bank_name: filterBankCode[0]?.label,
-          },
-        });
-      }
-    } catch (error: any) {
-      navigate("/bad-request");
-    } finally {
-      dispatch(cleanup());
       setIsLoading(false);
+    } else {
+      try {
+        const { data } = await axios.get(
+          `${url}/account/validate-wallet-address?address=${wallet_address}`
+        );
+        if (data.validWallet === null) {
+          navigate("/withdraw_kyc", {
+            state: {
+              transaction_id,
+              asset_code,
+              token,
+              type: transaction,
+              fee,
+              Hex: data.HexValue,
+              wallet_address,
+              amount: amount,
+              refCode: refCode,
+              account_name: accountName,
+              account_number: accountNumber,
+              bank_name: filterBankCode[0]?.label,
+            },
+          });
+        } else {
+          await sellRamp({
+            transaction,
+            transaction_id,
+            asset_code,
+            reference: refCode,
+            amount: amountInNgn,
+            fee,
+            wallet_address,
+            account_name: accountName,
+            account_number: accountNumber,
+            bank_name: filterBankCode[0]?.label,
+            type: "sell_ramp",
+          }).unwrap();
+          navigate("/stellar_withdraw_success", {
+            state: {
+              transaction_id,
+              asset_code,
+              token,
+              type: transaction,
+              fee,
+              Hex: data.HexValue,
+              amount: amount,
+              refCode: refCode,
+              account_name: accountName,
+              account_number: accountNumber,
+              bank_name: filterBankCode[0]?.label,
+            },
+          });
+        }
+      } catch (error: any) {
+        navigate("/bad-request");
+      } finally {
+        dispatch(cleanup());
+        setIsLoading(false);
+      }
     }
   };
 
@@ -286,6 +300,18 @@ export const RampSell_1 = () => {
               setAccountName(event.target.value);
             }}
           />
+
+          <p
+            className="text-gray-600"
+            style={{
+              color: "red",
+              marginTop: "5px",
+              fontWeight: "lighter",
+              fontSize: "14px",
+            }}
+          >
+            {walletCheck}
+          </p>
 
           <Space h={10} />
           <Button
