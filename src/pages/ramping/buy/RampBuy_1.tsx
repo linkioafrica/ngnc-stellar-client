@@ -44,6 +44,8 @@ export const RampBuy_1 = () => {
   const transaction_id = searchParams.get("transaction_id");
   const token = searchParams.get("token");
   wallet_address = searchParams.get("wallet");
+  // To get only the base domain URL
+  const baseUrl = window.location.origin;
 
   // Use Effect
   useEffect(() => {
@@ -106,6 +108,7 @@ export const RampBuy_1 = () => {
               Hex: data.HexValue,
               fee_percent: charge,
               user_name: data.username,
+              domain: baseUrl,
             },
           }
         );

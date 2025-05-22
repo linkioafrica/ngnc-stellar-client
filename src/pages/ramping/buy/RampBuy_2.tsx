@@ -68,6 +68,7 @@ export const RampBuy_2 = () => {
     account_name,
     account_number,
     bank_name,
+    domain,
   } = location.state;
 
   const handleSubmitTransactionData = async () => {
@@ -88,6 +89,7 @@ export const RampBuy_2 = () => {
         bank_name: bank_name,
         account_number: account_name,
         account_name: account_number,
+        domain,
       }).unwrap();
 
       if (data.status === "success") {

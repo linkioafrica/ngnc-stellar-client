@@ -37,6 +37,7 @@ export const BuyKYC = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const wallet_address = location.state.wallet_address;
+  const baseUrl = window.location.origin;
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
@@ -45,7 +46,7 @@ export const BuyKYC = () => {
 
     try {
       const { data } = await axios.get(
-        `${url}/stellar/customer-kyc?idType=${IDType}&idNumber=${idNumber}&email=${email}&address=${wallet_address}`
+        `${url}/stellar/customer-kyc?idType=${IDType}&idNumber=${idNumber}&email=${email}&address=${wallet_address}&domain=${baseUrl}`
       );
       console.log(data.status);
       if (data.status === "success") {

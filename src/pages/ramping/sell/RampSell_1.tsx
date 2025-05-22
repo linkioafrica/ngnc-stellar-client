@@ -76,6 +76,8 @@ export const RampSell_1 = () => {
   const transaction_id = searchParams.get("transaction_id");
   const token = searchParams.get("token");
   const wallet_address = searchParams.get("wallet");
+  // To get only the base domain URL
+  const baseUrl = window.location.origin;
 
   // eslint-disable-next-line array-callback-return
   const filterBankCode = bankList.filter((bank: any) => {
@@ -176,6 +178,7 @@ export const RampSell_1 = () => {
               account_name: accountName,
               account_number: accountNumber,
               bank_name: filterBankCode[0]?.label,
+              domain: baseUrl,
             },
           });
         } else {
@@ -191,6 +194,7 @@ export const RampSell_1 = () => {
             account_number: accountNumber,
             bank_name: filterBankCode[0]?.label,
             type: "sell_ramp",
+            domain: baseUrl,
           }).unwrap();
           navigate("/stellar_withdraw_success", {
             state: {
