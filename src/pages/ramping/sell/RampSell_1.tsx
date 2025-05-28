@@ -76,6 +76,7 @@ export const RampSell_1 = () => {
   const transaction_id = searchParams.get("transaction_id");
   const token = searchParams.get("token");
   const wallet_address = searchParams.get("wallet");
+  const callback = searchParams.get("callback");
   // To get only the base domain URL
   const baseUrl = window.location.origin;
 
@@ -179,6 +180,7 @@ export const RampSell_1 = () => {
               account_number: accountNumber,
               bank_name: filterBankCode[0]?.label,
               domain: baseUrl,
+              callback: callback,
             },
           });
         } else {

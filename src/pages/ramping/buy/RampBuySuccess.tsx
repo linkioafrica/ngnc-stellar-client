@@ -58,9 +58,18 @@ export const RampBuySuccess = () => {
         config
       );
       if (data.status === 200) {
-        window.location.replace(
-          `${url2}/transaction/more_info?id=${transaction_id}`
-        );
+        setTimeout(() => {
+          window.location.replace(
+            `${url2}/transaction/more_info?id=${transaction_id}`
+          );
+        }, 2000);
+        if (config.params.callback === "postMessage" && window.opener) {
+          window.opener.postMessage(
+            JSON.stringify({ id: transaction_id, status: "pending" }),
+            window.location.origin
+          );
+          window.close();
+        }
       }
     } catch (error) {
       setIsLoading(false);

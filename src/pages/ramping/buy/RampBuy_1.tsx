@@ -44,6 +44,7 @@ export const RampBuy_1 = () => {
   const transaction_id = searchParams.get("transaction_id");
   const token = searchParams.get("token");
   wallet_address = searchParams.get("wallet");
+  const callback = searchParams.get("callback");
   // To get only the base domain URL
   const baseUrl = window.location.origin;
 
@@ -109,6 +110,7 @@ export const RampBuy_1 = () => {
               fee_percent: charge,
               user_name: data.username,
               domain: baseUrl,
+              callback: callback,
             },
           }
         );

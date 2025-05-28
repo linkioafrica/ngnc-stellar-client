@@ -29,6 +29,7 @@ export const RampSellSuccess = () => {
     refCode,
     bank_name,
     account_number,
+    callback,
   } = location.state;
 
   let config = {
