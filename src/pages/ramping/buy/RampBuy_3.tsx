@@ -176,9 +176,9 @@ export const RampBuy_3 = () => {
                   <Grid.Col span={10}>
                     <Card.Section>
                       <Text size="xs" color="#1565d8">
-                        Ensure the Account details provided below match your KYC
-                        NAME. <br /> Deposit not completed within 30min be
-                        automatically cancelled.
+                        Ensure the Account details match your KYC name, &
+                        Deposit not completed within 30min will automatically be
+                        cancelled.
                       </Text>
                     </Card.Section>
                   </Grid.Col>

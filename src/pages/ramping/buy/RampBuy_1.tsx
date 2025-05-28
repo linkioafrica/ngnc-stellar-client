@@ -110,7 +110,7 @@ export const RampBuy_1 = () => {
               fee_percent: charge,
               user_name: data.username,
               domain: baseUrl,
-              callback: callback,
+              callback: callback?.toLowerCase(),
             },
           }
         );
@@ -142,7 +142,7 @@ export const RampBuy_1 = () => {
                 <Grid.Col span={10}>
                   <Card.Section>
                     <Text size="xs" color="#1565d8">
-                      Confirm AMOUNT and WALLET ADDRESS are correct. Any errors
+                      Confirm WALLET ADDRESS and AMOUNT are correct. Any errors
                       will result in loss of funds!
                     </Text>
                   </Card.Section>

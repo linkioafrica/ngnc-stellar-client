@@ -29,6 +29,7 @@ export const RampBuySuccess = () => {
     refCode,
     bank_name,
     account_number,
+    callback,
   } = location.state;
 
   let config = {
@@ -63,7 +64,7 @@ export const RampBuySuccess = () => {
             `${url2}/transaction/more_info?id=${transaction_id}`
           );
         }, 2000);
-        if (config.params.callback === "postMessage" && window.opener) {
+        if (callback === "postmessage" && window.opener) {
           window.opener.postMessage(
             JSON.stringify({ id: transaction_id, status: "pending" }),
             window.location.origin
