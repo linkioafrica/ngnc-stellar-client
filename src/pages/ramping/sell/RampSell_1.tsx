@@ -332,7 +332,7 @@ export const RampSell_1 = () => {
             disabled={
               accountName === "" ||
               accountNumber === "" ||
-              parseFloat(amount) < 10000
+              parseFloat(amount) < 15000
                 ? true
                 : false
             }

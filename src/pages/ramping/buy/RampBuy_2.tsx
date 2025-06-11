@@ -87,8 +87,8 @@ export const RampBuy_2 = () => {
         vendor_accNumber: vendor_account_number,
         vendor_bank: vendor_bank_name,
         bank_name: bank_name,
-        account_number: account_name,
-        account_name: account_number,
+        // account_number: account_name,
+        account_number: account_number,
         domain,
       }).unwrap();
 

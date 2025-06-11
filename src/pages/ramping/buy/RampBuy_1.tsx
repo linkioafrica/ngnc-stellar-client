@@ -196,7 +196,7 @@ export const RampBuy_1 = () => {
             disabled={
               wallet_address === "" ||
               amount === "" ||
-              parseFloat(amount) < 5000
+              parseFloat(amount) < 15000
                 ? true
                 : false
             }
