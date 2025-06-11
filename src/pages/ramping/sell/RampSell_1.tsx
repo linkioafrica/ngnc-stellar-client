@@ -242,7 +242,7 @@ export const RampSell_1 = () => {
             size="md"
             value={amount}
             type="number"
-            placeholder={`min: 20,000`}
+            placeholder={`min: 15,000`}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               setAmount(event.target.value);
             }}
