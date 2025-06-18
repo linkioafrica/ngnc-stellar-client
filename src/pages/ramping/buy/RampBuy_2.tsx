@@ -65,7 +65,7 @@ export const RampBuy_2 = () => {
     fee,
     // feePercent,
     wallet_address,
-    account_name,
+    // account_name,
     account_number,
     bank_name,
     domain,
