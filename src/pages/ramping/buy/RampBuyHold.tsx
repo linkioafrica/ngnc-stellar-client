@@ -19,10 +19,11 @@ export const RampBuyHold = () => {
             color: "#57595e",
           }}
         >
-          NGNC Deposit transactions are currently on hold.
+          NGN deposits are currently paused.
           <br />
-          maintenance ongoing.
-          <br /> Will be back Shortly. Thanks
+          Withdrawals are still available and processing normally.
+          <br />
+          We'll resume deposit services soon. Thank you for your patience.
         </p>
         {/* <Button
           size="md"
