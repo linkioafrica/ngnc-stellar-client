@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-pascal-case */
 import { AnimatePresence } from "framer-motion";
 import { Route, Routes, useLocation } from "react-router-dom";
+import { AnchorInfo } from "../pages/AnchorInfo";
 import { BusinessKyb } from "../pages/kyc/BusinessKYB";
 import { BuyKYC } from "../pages/kyc/BuyKYC";
 import { SellKYC } from "../pages/kyc/SellKYC";
@@ -21,8 +22,11 @@ export const PageRoutes = () => {
       <Routes key={location.pathname} location={location}>
         <Route path="/bad-request" element={<BadRequest />} />
 
-        {/* Auth*/}
-        <Route path="/" element={<BusinessKyb />} />
+        {/* Anchor info landing */}
+        <Route path="/" element={<AnchorInfo />} />
+
+        {/* Legacy "business moved" notice */}
+        <Route path="/business" element={<BusinessKyb />} />
 
         {/* KYC */}
         <Route path="/deposit_kyc" element={<BuyKYC />} />
