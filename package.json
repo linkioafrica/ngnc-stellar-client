@@ -53,7 +53,7 @@
     "postcss": "latest",
     "prettier": "3.0.1",
     "tailwindcss": "^3.2.4",
-    "wrangler": "^4.10.1"
+    "wrangler": "^4.86.0"
   },
   "author": {
     "name": "LINK (https://linkio.africa)",
